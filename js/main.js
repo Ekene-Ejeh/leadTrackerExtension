@@ -3,11 +3,17 @@ const inputElement = document.getElementById("input-el");
 let myLeads = [];
 const ulEl = document.getElementById("uList");
 
+//a function that puts the input value into the myLeads array,
+//empties the input tag and starts the renderLeads function
+
 inputBtn.addEventListener("click", () => {
 	myLeads.push(inputElement.value);
 	inputElement.value = "";
 	renderLeads();
 });
+
+//a function that renders the myLeads array on the page,
+//turns it to a link and opens the link on a new tab
 
 let renderLeads = () => {
 	let listItems = "";
@@ -15,10 +21,10 @@ let renderLeads = () => {
 		listItems += `
 			<li>
 				<a target='_blank' href='${myLeads[i]}'>
-				${myLeads[i]}
+					${myLeads[i]}
 				</a>
 			</li>`;
-		// 0;
+
 		//wrap the lead in an anchor tag (<a>) inside the <li>
 		// can you make the link open in a new tab?
 
@@ -38,12 +44,3 @@ containerElement.innerHTML = "<button onClick='buy()' >Buy!</button>";
 let buy = () => {
 	containerElement.innerHTML += "<p>Thank you for buying!<p/>";
 };
-
-// let box = document.getElementById("box");
-// box.addEventListener("click", () => {
-// 	console.log("I want to Open the Box!");
-// });
-
-const recipient = "John";
-const email = `Hey ${recipient}! How is it going? Cheers Per`;
-console.log(email);
