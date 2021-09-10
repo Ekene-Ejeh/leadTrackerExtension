@@ -38,9 +38,11 @@ let renderLeads = () => {
 	ulEl.innerHTML = listItems;
 };
 
-const containerElement = document.getElementById("container");
-containerElement.innerHTML = "<button onClick='buy()' >Buy!</button>";
+//how to creat a button with javascript.
+// const containerElement = document.getElementById("container");
+// containerElement.innerHTML = "<button onClick='buy()' >Buy!</button>";
 
-let buy = () => {
-	containerElement.innerHTML += "<p>Thank you for buying!<p/>";
-};
+//a function that renders a text on the page when the button is clicked.
+// let buy = () => {
+// 	containerElement.innerHTML += "<p>Thank you for buying!<p/>";
+// };
