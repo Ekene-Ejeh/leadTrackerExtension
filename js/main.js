@@ -4,30 +4,24 @@ const inputElement = document.getElementById("input-el");
 const ulEl = document.getElementById("uList");
 const deleteBtn = document.getElementById("delete-btn");
 const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
-
-// console.log(localStorage.getItem("myLeads"));
+const saveTabBtn = document.getElementById('save-tab-btn');
 
 if (leadsFromLocalStorage) {
 	myLeads = leadsFromLocalStorage;
-	renderLeads();
+	render(myLeads);
 }
 
 // the render leads on the page function
-function renderLeads() {
+function render(leads) {
 	let listItems = "";
-	for (let i = 0; i < myLeads.length; i++) {
+	for (let i = 0; i < leads.length; i++) {
 		listItems += `
 			<li>
-				<a target='_blank' href='${myLeads[i]}'>
-					${myLeads[i]}
+				<a target='_blank' href='${leads[i]}'>
+					${leads[i]}
 				</a>
-			</li>`;
-
-		//wrap the lead in an anchor tag (<a>) inside the <li>
-		// can you make the link open in a new tab?
-
-		//target='_black'
-
+			</li>`;  
+		//option 2 to render the leads on the page
 		// ulEl.innerHTML += "<li>" + myLeads[i] + "</li>";
 		// const listItem = document.createElement("li");
 		// listItem.textContent = myLeads[i];
@@ -36,57 +30,47 @@ function renderLeads() {
 	ulEl.innerHTML = listItems;
 }
 
-// the save button
+// the save input button
 inputBtn.addEventListener("click", () => {
-	myLeads.push(inputElement.value);
-	inputElement.value = "";
-	localStorage.setItem("myLeads", JSON.stringify(myLeads));
-	renderLeads();
+	myLeads.push(inputElement.value); //to push the input value into the array
+	inputElement.value = ""; //to empty the input tab after its been pushed
+	localStorage.setItem("myLeads", JSON.stringify(myLeads)); //to store the value in the localStorage
+	render(myLeads);
 });
 
-//the delete button
+// the save tab button
+saveTabBtn.addEventListener('click', () => {
+	chrome.tabs.query({active: true, currentWindow:true}, function(tabs){ //grabs the url from the tab
+		myLeads.push(tabs[0].url);
+		localStorage.setItem('myLeads', JSON.stringify(myLeads));
+		render(myLeads);
+	})
+
+});
+
+//the delete all button
 deleteBtn.addEventListener("dblclick", () => {
-	localStorage.clear();
-	myLeads = [];
-	renderLeads();
+	localStorage.clear(); // to clear the localStorage
+	myLeads = []; //to empty the array
+	render(myLeads); //to render an empty array, there by clearing the leads on the page.
 });
 
-// // let name = localStorage.setItem("myName", "John");
+
+
+
+//some useful commented code snippets
+
+//saving data into the local storage
+// let name = localStorage.setItem("myName", "John");
 // let name = localStorage.getItem("myName");
 // console.log(name);
-// // localStorage.clear();
+// localStorage.clear();
 
-// //turns a string to an array
-// // JSON.parse();
+//turns a string to an array
+// let name = JSON.parse('name');
 
-// //turns an array to a string
-// // JSON.stringify();
-
-// let myNames = `["paul"]`;
-
-// console.log(typeof myNames);
-// //1. turn myNames string into an array
-// myNames = JSON.parse(myNames);
-// console.log(typeof myNames);
-
-// //2. push a new value to the
-// myNames.push("Doe");
-// console.log(typeof myNames);
-// console.log(myNames);
-// // console.log(myNames);
-
-// //3. turn the array into a string again
-// myNames = JSON.stringify(myNames);
-
-// console.log(leadsFromLocalStorage);
-
-// //4. console.log the string using typeof to verify that it's a string
-// console.log(typeof myNames);
-// //a function that puts the input value into the myLeads array,
-// //empties the input tag and starts the renderLeads function
-
-//a function that renders the myLeads array on the page,
-//turns it to a link and opens the link on a new tab
+//turns an array to a string
+// let name = JSON.stringify('name');
 
 //how to creat a button with javascript.
 // const containerElement = document.getElementById("container");
